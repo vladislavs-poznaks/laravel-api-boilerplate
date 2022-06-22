@@ -30,7 +30,3 @@ Route::group([
     Route::get('user', fn(Request $request) => $request->user());
     Route::post('logout', [LogoutController::class, 'logout']);
 });
-
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
