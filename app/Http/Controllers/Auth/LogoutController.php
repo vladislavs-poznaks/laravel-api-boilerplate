@@ -9,9 +9,7 @@ class LogoutController extends Controller
 {
     public function logout(Request $request)
     {
-        $token = $request->user()->token();
-
-        $token->revoke();
+        $request->user()->tokens()->delete();
 
         return response()->json([
             'message' => 'Successfully logged out'

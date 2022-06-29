@@ -2,28 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
-use App\Models\User;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Auth\LoginRequest;
 
-class LoginController extends Controller
+class LoginController extends AuthController
 {
     public function login(LoginRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
-
-        $msg = 'Incorrect credentials';
-
-        abort_if(is_null($user), Response::HTTP_UNPROCESSABLE_ENTITY, $msg);
-
-        abort_if(!Hash::check($request->password, $user->password), Response::HTTP_UNPROCESSABLE_ENTITY, $msg);
-
-        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-
-        return response()->json([
-            'token' => $token
-        ]);
+        return $this->token($request->email, $request->password);
     }
 }
